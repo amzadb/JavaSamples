@@ -14,19 +14,29 @@ public class FactorialCalculatorService {
 		System.out.println("Calling FacotrialCalualtor(" + number + ")");
 		Future<Long> future3 = executor.submit(new FactorialCalculator(number));
 
-		Long factorial3 = future3.get();
-		System.out.println("3! = " + factorial3);
-
 		number = 5;
 		System.out.println("Calling FacotrialCalualtor(" + number + ")");
 		Future<Long> future5 = executor.submit(new FactorialCalculator(number));
 
-		Long factorial5 = future5.get();
-		System.out.println("5! = " + factorial5);
-
 		number = 10;
 		System.out.println("Calling FacotrialCalualtor(" + number + ")");
 		Future<Long> future10 = executor.submit(new FactorialCalculator(number));
+
+		while (!(future10.isDone())) {
+			System.out.println(
+					String.format("future3 is %s \nfuture5 is %s \nfuture10 is %s",
+							future3.isDone() ? "done" : "not done", 
+							future5.isDone() ? "done" : "not done",
+							future10.isDone() ? "done" : "not done")
+					);
+			Thread.sleep(300);
+		}
+
+		Long factorial3 = future3.get();
+		System.out.println("3! = " + factorial3);
+
+		Long factorial5 = future5.get();
+		System.out.println("5! = " + factorial5);
 
 		Long factorial10 = future10.get();
 		System.out.println("10! = " + factorial10);
