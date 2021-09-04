@@ -22,14 +22,35 @@ public class FactorialCalculatorService {
 		System.out.println("Calling FacotrialCalualtor(" + number + ")");
 		Future<Long> future10 = executor.submit(new FactorialCalculator(number));
 
+		int i = 1;
 		while (!(future10.isDone())) {
-			System.out.println(
-					String.format("future3 is %s \nfuture5 is %s \nfuture10 is %s",
-							future3.isDone() ? "done" : "not done", 
-							future5.isDone() ? "done" : "not done",
-							future10.isDone() ? "done" : "not done")
-					);
-			Thread.sleep(300);
+			
+			if (future3.isDone()) { 
+				System.out.println(i + ") future3 is done");
+			} else {
+				System.out.println(i + ") future3 is not done");
+			}
+			
+			if (future5.isDone()) { 
+				System.out.println(i + ") future5 is done");
+			} else {
+				System.out.println(i + ") future5 is not done");
+			}
+			
+			if (future10.isDone()) { 
+				System.out.println(i + ") future10 is done");
+			} else {
+				System.out.println(i + ") future10 is not done");
+			}
+//						
+//			System.out.println(
+//					String.format("future3 is %s \nfuture5 is %s \nfuture10 is %s",
+//							future3.isDone() ? "done" : "not done", 
+//							future5.isDone() ? "done" : "not done",
+//							future10.isDone() ? "done" : "not done")
+//					);
+			Thread.sleep(500);
+			i++;
 		}
 
 		Long factorial3 = future3.get();

@@ -9,7 +9,7 @@ public class FindFactorial {
 
 	private static ExecutorService executor = Executors.newSingleThreadExecutor();
 
-	public static Future<Long> getFactorial(Integer number) {
+	public static Future<Long> getFactorialAsync(Integer number) {
 		return executor.submit(() -> {
 			long result = 1;
 			int num = number;
@@ -22,8 +22,8 @@ public class FindFactorial {
 		});
 	}
 
-	private static Long getFactorialAsync(int number) throws InterruptedException, ExecutionException {
-		Future<Long> future = getFactorial(number);
+	private static Long getFactorial(int number) throws InterruptedException, ExecutionException {
+		Future<Long> future = getFactorialAsync(number);
 		while (!future.isDone()) {
 			System.out.println("Calculating " + number + "!");
 			Thread.sleep(100);
@@ -35,15 +35,15 @@ public class FindFactorial {
 
 	public static void main(String[] args) throws Exception {
 		int number = 3;
-		Long factorial = getFactorialAsync(number);
+		Long factorial = getFactorial(number);
 		System.out.println("Factorial of " + number + " is: " + factorial);
 
 		number = 5;
-		factorial = getFactorialAsync(number);
+		factorial = getFactorial(number);
 		System.out.println("Factorial of " + number + " is: " + factorial);
 
 		number = 10;
-		factorial = getFactorialAsync(number);
+		factorial = getFactorial(number);
 		System.out.println("Factorial of " + number + " is: " + factorial);
 
 		executor.shutdown();
